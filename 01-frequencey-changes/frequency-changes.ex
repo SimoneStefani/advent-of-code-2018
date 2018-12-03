@@ -3,13 +3,12 @@ defmodule FrequencyChanges do
     {:ok, data} = File.read(file)
     
     data
-    |> String.split("\n")
+    |> String.split("\n", trim: true)
     |> Enum.map(fn val -> String.to_integer(val) end)
   end
 
   def compute_changes(file) do
-    read(file)
-    |> Enum.sum
+    read(file) |> Enum.sum
   end
 
   def first_repeated_frequency(file) do
@@ -22,10 +21,8 @@ defmodule FrequencyChanges do
       true -> acc
       false ->
         case t do
-          [] -> 
-            first_repeated_frequency(values, values, [acc | freqs], acc + h)
-          _ ->
-            first_repeated_frequency(values, t, [acc | freqs], acc + h)
+          [] -> first_repeated_frequency(values, values, [acc | freqs], acc + h)
+          _ -> first_repeated_frequency(values, t, [acc | freqs], acc + h)
         end
     end
   end
