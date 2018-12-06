@@ -2,7 +2,9 @@
 defmodule IdsChecksum do
   def read(file) do
     {:ok, data} = File.read(file)
-    data |> String.split("\n")
+    data
+    |> String.trim_trailing("\n")
+    |> String.split("\n")
   end
 
   def compute_checksum(file), do: compute_checksum(read(file), 0, 0)
